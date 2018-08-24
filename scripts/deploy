@@ -1,18 +1,15 @@
 #!/bin/bash
 
-echo "Build Started."
-cat ./dist/worker.js
+echo "Deploy Started."
 
 # Makes the API call and sets a variable with the HTTP response code
-# response=$(curl -s -o /dev/null -w "%{http_code}" -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "./dist/worker.js")
-
-response=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "./dist/worker.js")
-
-echo $response
+response=$(curl -s -o /dev/null -w "%{http_code}" -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "@./dist/worker.js")
 
 # If the response code was 200 the deploy failed, otherwise exit with the HTTP response code
 if [ 200 -eq $response ]; then
+  echo "Deploy Succeeded."
   exit 0
 else
+  echo "Deploy Failed."
   exit $response
 fi;
