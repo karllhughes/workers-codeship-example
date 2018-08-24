@@ -1,0 +1,4 @@
+- name: deploy
+  tag: pro
+  service: deployer
+  command: bash scripts/deploy

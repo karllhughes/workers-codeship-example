@@ -1,0 +1,3 @@
+deployer:
+  build: .
+  encrypted_env_file: .env.encrypted
