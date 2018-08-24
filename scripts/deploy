@@ -1,12 +1,12 @@
 #!/bin/bash
 
 echo "Build Started."
-echo $CLOUDFLARE_EMAIL
+cat dist/worker.js
 
 # Makes the API call and sets a variable with the HTTP response code
 # response=$(curl -s -o /dev/null -w "%{http_code}" -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "./dist/worker.js")
 
-response=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "./dist/worker.js")
+response=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "X-Auth-Key:$CLOUDFLARE_AUTH_KEY" -H "Content-Type:application/javascript" --data-binary "dist/worker.js")
 
 echo $response
 
